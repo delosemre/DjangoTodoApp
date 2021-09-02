@@ -1,0 +1,53 @@
+{% extends "todo_app/base.html" %}
+
+{%block title %}
+Home Page
+{%endblock title %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+    <center>
+      <h1 class="display-5 fw-bold">TO-DO LIST</h1>
+      <p class="col-md-8 fs-4">To-do list project built with Django</p>
+      <a class="btn btn-outline-success" href="{% url 'create' %}">Create New To-Do</a>
+    </center>
+    </div>
+  </div>
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">To Do Name</th>
+          <th scope="col">Is Finished?</th>
+          <th scope="col">Date and Time</th>
+          <th scope="col">Delete</th>
+          <th scope="col">Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for todo in todo_list %}
+        {% if todo.finished %}
+            <tr>
+              <td><del>{{ todo.title }}</del></td>
+              <td><a class="btn btn-danger" href="{% url 'yes_finish' todo.id %}">Yes</a></td>
+              <td>{{ todo.date }}</td>
+              <td><a class="btn btn-danger" href="{% url 'delete' todo.id %}">Delete</a></td>
+              <td><a class="btn btn-warning" href="{% url 'update' todo.id %}">Update</a></td>
+            </tr>
+            {% else %}
+              <tr>
+                <td>{{ todo.title }}</td>
+                <td><a class="btn btn-warning" href="{% url 'no_finish' todo.id %}">No</a></td>
+                <td>{{ todo.date }}</td>
+                <td><a class="btn btn-danger" href="{% url 'delete' todo.id %}">Delete</a></td>
+                <td><a class="btn btn-warning" href="{% url 'update' todo.id %}">Update</a></td>
+              </tr>
+            {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+{% endblock content %}
